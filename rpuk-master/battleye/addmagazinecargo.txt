@@ -1,0 +1,16 @@
+//new
+1 "" !="30Rnd_65x39_caseless_mag_Tracer" !="16Rnd_9x21_Mag" !="30Rnd_65x39_caseless_mag" !="SmokeShell" !="9Rnd_45ACP_Mag" !="200Rnd_65x39_cased_Box" !="20Rnd_556x45_UW_mag" !="7Rnd_408_Mag" !="7Rnd_408_Mag" !="30Rnd_65x39_caseless_green" !="30Rnd_9x21_Mag" !="30Rnd_556x45_Stanag_Tracer_Red" !="6Rnd_45ACP_Cylinder" !="10Rnd_762x51_Mag" !="20Rnd_762x51_Mag" !="100Rnd_65x39_caseless_mag" !="30Rnd_556x45_Stanag" !="150Rnd_762x51_Box" !="11Rnd_45ACP_Mag" !="200Rnd_65x39_cased_Box_Tracer" !="30Rnd_45ACP_Mag_SMG_01" !="30Rnd_45ACP_Mag_SMG_01_Tracer_Green" !="30Rnd_65x39_caseless_green_mag_Tracer" !="30Rnd_556x45_Stanag_Tracer_Green" !="30Rnd_556x45_Stanag_Tracer_Yellow" !="6Rnd_RedSignal_F" !="B_IR_Grenade" !="150Rnd_762x51_Box_Tracer" !="3Rnd_Smoke_Grenade_shell" !="5Rnd_127x108_APDS_Mag" !="B_Parachute"
+
+5 "APERSBoundingMine_Range_Mag"
+5 "ClaymoreDirectionalMine_Remote_Mag"
+5 "SLAMDirectionalMine_Wire_Mag"
+5 "SmokeShellRed"
+5 "1Rnd_HE_Grenade_shell"
+5 "NLAW_F"
+5 "optic_nightstalker"
+5 "optic_NVS"
+5 "optic_Yorris"
+5 "optic_MRD"
+5 "optic_tws"
+5 "optic_tws_mg"
+5 "optic_NVS"

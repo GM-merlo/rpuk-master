@@ -1,0 +1,4 @@
+//new
+//1 "" !="life_fnc_playSound" !="life_fnc_animSync" !="TON_fnc_update" !="life_fnc_broadcast" !="TON_fnc_managesc" !="clientGangKick" !="TON_fnc_spawnVehicle" !="life_fnc_receiveItem" !="TON_fnc_getVehicles" !="TON_fnc_query" !="life_fnc_ReTexUniform" !="TON_fnc_vehicleStore" !="life_fnc_copSearch" !="life_fnc_searchClient" !="life_fnc_giveDiff" !="life_fnc_copSiren" !="life_fnc_wantedFetch" !="life_fnc_simDisable" !="life_fnc_wantedRemove" !="life_fnc_wantedAdd" !="life_fnc_lockVehicle" !="life_fnc_restrain" !="clientGangLeader"
+5 "bis_fnc_endmission"
+5 "\"TON_fnc_clientWireTransfer\",true"

@@ -1,0 +1,66 @@
+#define true 1
+#define false 0
+/*
+* @File:   description.ext
+* @Author: Tonic + Ciaran "Ciaran" Langton <email@ciaranlangton.com>
+*
+* Copyright (C) Ciaran Langton 2016 - All Rights Reserved - https://www.roleplay.co.uk
+* Unauthorized copying of this file, via any medium is strictly prohibited
+* without the express permission of Ciaran "Ciaran" Langton <email@ciaranlangton.com>
+*/
+author = "Roleplay UK Development Team";
+onLoadName = "Tanoa Life UK";
+onLoadMission = "";
+loadscreen = "welcome.paa";
+joinUnassigned = 0;
+respawn = BASE;
+respawndelay = 6;
+disabledAI = 1;
+disableChannels[] = {0, 1, 2};
+enableDebugConsole = 1;
+respawnDialog = 0;
+scriptedPlayer = 1;
+briefing = 0;
+
+class Header {
+  gameType = RPG;
+  minPlayers = 1;
+  maxPlayers = 120;
+};
+
+wreckLimit = 3;
+wreckRemovalMinTime = 60;
+wreckRemovalMaxTime = 320;
+corpseLimit = 150;
+corpseRemovalMinTime = 999;
+corpseRemovalMaxTime = 9999;
+
+#include "config_files\CfgAtms.hpp"
+#include "config_files\CfgClothing.hpp"
+#include "config_files\CfgDebriefing.hpp"
+#include "config_files\CfgFunctions.hpp"
+#include "config_files\CfgNameTags.hpp"
+#include "config_files\CfgNotifications.hpp"
+#include "config_files\CfgSounds.hpp"
+#include "config_files\CfgSpawns.hpp"
+#include "config_files\CfgUniform.hpp"
+#include "config_files\CfgVirtualShop.hpp"
+#include "config_files\CfgProgression.hpp"
+#include "config_files\CfgShopSystem.hpp"
+#include "config_files\CfgMainMenu.hpp"
+#include "dialog\MasterHandler.h"
+#include "Map\Map_Master.hpp"
+#include "remote_exec.h"
+
+class ALUK_MOD_CONFIG {
+  version = 1.0.0;
+};
+
+class RscTitles {
+  #include "dialog\ui.hpp"
+  #include "dialog\progress.hpp"
+  #include "dialog\hud_nameTags.h"
+  #include "dialog\intro.hpp"
+};
+
+class CfgRemoteExecCommands {};

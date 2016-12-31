@@ -1,0 +1,2 @@
+//new
+1 "" !="B_medic_F" !="C_man_polo_6_F" !="C_man_1"

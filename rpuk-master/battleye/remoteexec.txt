@@ -1,0 +1,3 @@
+//new
+1 "" !="removeBackpack this; removeAllWeapons this;"
+7 "" !="" !="removeBackpack this; removeAllWeapons this;" !="_this spawn life_fnc_mpKill;" !="bis_fnc_execvm [[civ_[0-9]+,false],\"initPlayerServer.sqf\"]" !="bis_fnc_execvm [[cop_[0-9]+,false],\"initPlayerServer.sqf\"]" !="bis_fnc_execvm [[medic_[0-9]+,false],\"initPlayerServer.sqf\"]" !="bis_fnc_execvm [[civ_[0-9]+,true],\"initPlayerServer.sqf\"]" !="bis_fnc_execvm [[cop_[0-9]+,true],\"initPlayerServer.sqf\"]" !="bis_fnc_execvm [[medic_[0-9]+,true],\"initPlayerServer.sqf\"]" !bis_fnc_effectkilledsecondaries !bis_fnc_effectkilledairdestruction !life_fnc_broadcast

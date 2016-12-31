@@ -1,0 +1,190 @@
+/*
+	File: fn_hudUpdate.sqf
+
+	Author: Ciaran
+	Date: 2015-12-18 20:17:19
+	Last Modified by: Ciaran
+	Last Modified time: 2015-12-20 23:23:51
+*/
+disableSerialization;
+private _ui = uiNameSpace getVariable ["playerHUD",displayNull];
+if(isNull _ui) then {[] call life_fnc_hudSetup;};
+
+//Player HUD Icons
+private _food = _ui displayCtrl 23500;
+private _water = _ui displayCtrl 23510;
+private _health = _ui displayCtrl 23515;
+private _misc = _ui displayCtrl 23520;
+private _miscImg = _ui displayCtrl 23521;
+private _wantedHUD = _ui displayCtrl 23525;
+private _foodIcon = _ui displayCtrl 23531;
+private _waterIcon = _ui displayCtrl 23532;
+private _healthIcon = _ui displayCtrl 23533;
+
+//Medical icons
+//private _boneIcon = _ui displayCtrl 23522;
+private _mutedIcon = _ui displayCtrl 23523;
+private _drunkIcon = _ui displayCtrl 23524;
+
+private _allCtrls = [
+
+	_food,
+	_water,
+	_health,
+	_misc,
+	_miscImg,
+	_wantedHUD,
+	_foodIcon,
+	_waterIcon,
+	_healthIcon,
+	//_boneIcon,
+	_mutedIcon,
+	_drunkIcon
+
+];
+
+//--- Is the HUD disabled?
+if ( life_disableHUD ) then {
+
+	//--- Are the controls shown?
+	if ( ctrlShown _food ) then {
+
+		//--- Hide all the Controls
+		{ _x ctrlShow false } forEach _allCtrls;
+
+	};
+
+} else {
+
+	//--- HUD needs to be shown, check if it is hidden currently.
+	if !( ctrlShown _food ) then {
+
+		//--- Show everything BUT the wanted list, bone icon, muted icon and the drink icon.
+		{ if !( _x in [ _wantedHUD, /*_boneIcon,*/ _mutedIcon, _drunkIcon ] ) then { _x ctrlShow true } } forEach _allCtrls;
+
+	};
+
+	//--- Commence a HUD state update
+
+	//--- Update muted icon
+	_mutedIcon ctrlShow ( soundVolume != 1 );
+
+	//--- Update Drunk Icon
+	_drunkIcon ctrlShow ( life_drinkypoo > 0.11 );
+
+	//Update food
+	_food ctrlSetPosition [safeZoneX+safeZoneW-0.090,safeZoneY+safeZoneH-0.570];
+	_food ctrlSetText format["%1%2", life_hunger, "%"];
+	_food ctrlSetBackgroundColor [0, 0, 0, 0.5];
+	if(life_hunger < 0.3) then {
+		_food ctrlSetBackgroundColor [255, 0, 0, 0.5];
+	};
+	_food ctrlCommit 0;
+	//Update Water
+	_water ctrlSetPosition [safeZoneX+safeZoneW-0.090,safeZoneY+safeZoneH-0.508];
+	_water ctrlSetText format["%1%2", life_thirst, "%"];
+	_water ctrlSetBackgroundColor [0, 0, 0, 0.5];
+	if(life_thirst < 0.3) then {
+		_water ctrlSetBackgroundColor [255, 0, 0, 0.5];
+	};
+	_water ctrlCommit 0;
+
+	//Update Health
+	_health ctrlSetPosition [safeZoneX+safeZoneW-0.090,safeZoneY+safeZoneH-0.445];
+	_dam = round((1 - (damage player)) * 100);
+	_health ctrlSetText format["%1%2", _dam, "%"];
+	_health ctrlSetBackgroundColor [0, 0, 0, 0.5];
+	if(damage player > 0.5) then {
+		_health ctrlSetBackgroundColor [255, 0, 0, 0.5];
+	};
+	_health ctrlCommit 0;
+
+	//Update Misc Section
+	_misc ctrlSetPosition [safeZoneX+safeZoneW-0.090,safeZoneY+safeZoneH-0.380];
+	_misc ctrlSetBackgroundColor [0, 0, 0, 0.5];
+	_misc ctrlCommit 0;
+
+	//Decide what to show
+	switch(playerSide) do
+	{
+
+		//--- Civilian - Show Wanted Level
+		case civilian:
+		{
+			_misc ctrlSetText format["£%1", ([(life_crimes select 1)] call life_fnc_numberText)];
+			_miscImg ctrlSetText "icons\bounty.paa";
+			if((life_crimes select 1) > 100000) then {
+				_misc ctrlSetBackgroundColor [255, 0, 0, 0.5];
+			};
+		};
+
+		//--- Medics - Show Amount of Dead People
+		case independent:
+		{
+			private _count = 0;
+			{
+				private _name = _x getVariable "name";
+				private _down = _x getVariable ["Revive",false];
+				if(!isNil "_name" && !_down) then {
+					_count = _count + 1;
+				};
+			} foreach allDeadMen;
+
+			_miscImg ctrlSetText "icons\dead.paa";
+			_misc ctrlSetText format["%1", _count];
+		};
+
+		//--- Police - Show amount of Criminals on island.
+		case west:
+		{
+			_miscImg ctrlSetText "icons\criminal.paa";
+
+			private _wanted = 0;
+			private _text = [ "<t color='#2E2EFE'><t size='1.5'>Wanted List</t></t><br/>" ];
+			private _wantedListOutput = [];
+
+			{
+				if(side _x == civilian) then
+				{
+					private _status = _x getVariable ["life_crimes",[[],0]];
+					if((_status select 1) > 0) then {
+						_wantedListOutput pushBack [_x,_status];
+						_wanted = _wanted + 1;
+					};
+				};
+			} forEach playableUnits;
+
+			if(_wanted == 0) then {_text pushBack "No Criminals"};
+			_misc ctrlSetText format["%1", _wanted];
+
+			if(life_wantedhud) then {
+
+				//--- Sorting algorithm
+				for "_i" from 0 to count _wantedListOutput -1 do {
+					private _maxIndex = 0;
+					private _maxCash = 0;
+					private _name = "";
+					{
+						if(((_x select 1) select 1) > _maxCash) then {
+							_name = (_x select 0) getVariable["realname",name (_x select 0)];
+							_maxIndex = _forEachIndex;
+							_maxCash = (_x select 1) select 1;
+						};
+					} forEach _wantedListOutput;
+					_text pushBack format["%1 [£%2]",_name,[_maxCash] call life_fnc_numberText];
+					_wantedListOutput set[_maxIndex,-1];
+					_wantedListOutput = _wantedListOutput - [-1];
+				};
+
+				_wantedHUD ctrlShow true;
+				_wantedHUD ctrlSetStructuredText parseText ( _text joinString "<br/>" );
+
+			} else {
+
+				_wantedHUD ctrlShow false;
+
+			};
+		};
+	};
+
+};

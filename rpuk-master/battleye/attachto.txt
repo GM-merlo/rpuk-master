@@ -1,0 +1,3 @@
+//new
+5 "" !"C_" !"B_" !"I_" !"O_" !Land_Razorwire_F !SmokeShell !=Chemlight_red !Shot !NVG_TargetC
+1 ""
